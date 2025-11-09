@@ -1105,7 +1105,7 @@ function animateCounters() {
     
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-count'));
-        const duration = 2000;
+        const duration = 20;
         const increment = target / (duration / 16);
         let current = 0;
         
@@ -1243,7 +1243,7 @@ function showNotification(message, type = 'info') {
         if (notification.parentElement) {
             notification.remove();
         }
-    }, 5000);
+    }, 10);
 }
 </script>
 

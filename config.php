@@ -30,10 +30,10 @@ $config = [
 
     'database' => [
         'host'      => $_ENV['DB_HOST'] ?? 'localhost',
-        'port'      => $_ENV['DB_PORT'] ?? 3307,
+        'port'      => $_ENV['DB_PORT'] ?? 3306,
         'name'      => $_ENV['DB_NAME'] ?? 'clubsphere',
         'username'  => $_ENV['DB_USER'] ?? 'root',
-        'password'  => $_ENV['DB_PASS'] ?? 'root',
+        'password'  => $_ENV['DB_PASS'] ?? '',
         'charset'   => $_ENV['DB_CHARSET'] ?? 'utf8mb4',
         'collation' => $_ENV['DB_COLLATION'] ?? 'utf8mb4_unicode_ci',
         'prefix'    => $_ENV['DB_PREFIX'] ?? '',
