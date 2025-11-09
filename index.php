@@ -2,421 +2,295 @@
 session_start();
 require_once 'header.php';
 
-// Get featured content
+// ✅ Ensure helper functions exist before calling
+if (!function_exists('getUpcomingEvents')) {
+    function getUpcomingEvents($limit = 6) { return []; }
+}
+if (!function_exists('getRecentAnnouncements')) {
+    function getRecentAnnouncements($limit = 6) { return []; }
+}
+
+// Fetch featured content
 $featuredEvents = getUpcomingEvents(6);
 $featuredAnnouncements = getRecentAnnouncements(6);
-$totalClubs = 6; // ACM, ACES, CESA, MESA, ITSA, IEEE
-$totalMembers = 1000; // Sample data
-$totalEvents = 500; // Sample data
-
+$totalClubs = 6;      // Example: ACM, ACES, CESA, MESA, ITSA, IEEE
+$totalMembers = 1000; // Placeholder
+$totalEvents = 500;   // Placeholder
 ?>
 
 <!-- Hero Section -->
 <section class="hero" id="home">
-    <div class="hero-container">
-        <div class="hero-content">
-            <div class="hero-text" data-aos="fade-up">
-                <h1 class="hero-title">
-                    Where Passion Meets <span class="highlight">Innovation</span>
-                </h1>
-                <p class="hero-description">
-                    Join thousands of students in managing clubs, events, and collaborations seamlessly. 
-                    ClubSphere empowers you to connect, create, and achieve more together.
-                </p>
-                <div class="hero-buttons">
-                    <a href="events.php" class="btn btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        Explore Events
-                    </a>
-                    <a href="clubs.php" class="btn btn-secondary">
-                        <i class="fas fa-users"></i>
-                        Browse Clubs
-                    </a>
-                </div>
-            </div>
-            
-            <div class="hero-visual" data-aos="fade-left" data-aos-delay="200">
-                <div class="hero-sphere">
-                    <div class="sphere-layer layer-1">
-                        <div class="sphere-text">CLUB</div>
-                        <div class="sphere-text">EVENT</div>
-                        <div class="sphere-text">CONNECT</div>
-                    </div>
-                    <div class="sphere-layer layer-2">
-                        <div class="sphere-text">LEARN</div>
-                        <div class="sphere-text">GROW</div>
-                        <div class="sphere-text">ACHIEVE</div>
-                    </div>
-                    <div class="sphere-layer layer-3">
-                        <div class="sphere-text">CREATE</div>
-                        <div class="sphere-text">INNOVATE</div>
-                        <div class="sphere-text">INSPIRE</div>
-                    </div>
-                </div>
-            </div>
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-text" data-aos="fade-up">
+        <h1 class="hero-title">
+          Where Passion Meets <span class="highlight">Innovation</span>
+        </h1>
+        <p class="hero-description">
+          Join thousands of students in managing clubs, events, and collaborations seamlessly.
+          ClubSphere empowers you to connect, create, and achieve more together.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="dashboard/events.php" class="btn btn-primary">
+            <i class="fas fa-rocket"></i> Explore Events
+          </a>
+          <a href="dashboard/announcements.php" class="btn btn-primary">
+            <i class="fas fa-bullhorn"></i> Explore Announcements
+          </a>
+          <a href="clubs.php" class="btn btn-secondary">
+            <i class="fas fa-users"></i> Browse Clubs
+          </a>
         </div>
+      </div>
+
+      <!-- Neon Animated Text Boxes -->
+      <div class="hero-visual" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-box-container">
+          <div class="text-box"><span>CLUB</span></div>
+          <div class="text-box"><span>EVENT</span></div>
+          <div class="text-box"><span>CONNECT</span></div>
+          <div class="text-box"><span>LEARN</span></div>
+          <div class="text-box"><span>GROW</span></div>
+          <div class="text-box"><span>INSPIRE</span></div>
+        </div>
+      </div>
     </div>
-    
-    <!-- Hero Background Animation -->
-    <div class="hero-bg">
-        <div class="bg-particles" id="bgParticles"></div>
-    </div>
+  </div>
+
+  <div class="hero-bg">
+    <div class="bg-particles" id="bgParticles"></div>
+  </div>
 </section>
 
 <!-- Stats Section -->
 <section class="stats-section">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-number" data-count="<?php echo $totalClubs; ?>">0</div>
-                <div class="stat-label">Active Clubs</div>
-            </div>
-            
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="stat-icon">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
-                <div class="stat-number" data-count="<?php echo $totalMembers; ?>">0</div>
-                <div class="stat-label">Registered Members</div>
-            </div>
-            
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="stat-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <div class="stat-number" data-count="<?php echo $totalEvents; ?>">0</div>
-                <div class="stat-label">Events Hosted</div>
-            </div>
-            
-            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="stat-icon">
-                    <i class="fas fa-trophy"></i>
-                </div>
-                <div class="stat-number" data-count="100">0</div>
-                <div class="stat-label">Success Rate</div>
-            </div>
-        </div>
-    </div>
-</section>
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-number" data-count="<?= $totalClubs; ?>">0</div>
+        <div class="stat-label">Active Clubs</div>
+      </div>
 
-<!-- Featured Events -->
-<section class="featured-section" id="events">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Upcoming Events</h2>
-            <p class="section-description">
-                Don't miss out on exciting events and opportunities to learn, network, and grow.
-            </p>
-        </div>
-        
-        <div class="events-grid">
-            <?php if (empty($featuredEvents)): ?>
-                <div class="no-content" data-aos="fade-up">
-                    <i class="fas fa-calendar-times"></i>
-                    <h3>No Upcoming Events</h3>
-                    <p>Check back soon for new events!</p>
-                </div>
-            <?php else: ?>
-                <?php foreach ($featuredEvents as $index => $event): ?>
-                    <div class="event-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                        <div class="event-image">
-                            <img src="<?php echo $event['event_poster'] ? baseUrl('uploads/events/' . $event['event_poster']) : baseUrl('assets/images/default-event.jpg'); ?>" 
-                                 alt="<?php echo htmlspecialchars($event['event_title']); ?>" 
-                                 class="event-poster">
-                            <div class="event-badge"><?php echo htmlspecialchars($event['event_type']); ?></div>
-                        </div>
-                        
-                        <div class="event-content">
-                            <div class="event-meta">
-                                <div class="event-date">
-                                    <i class="fas fa-calendar"></i>
-                                    <?php echo formatDate($event['start_datetime'], 'M j, Y'); ?>
-                                </div>
-                                <div class="event-time">
-                                    <i class="fas fa-clock"></i>
-                                    <?php echo formatDate($event['start_datetime'], 'g:i A'); ?>
-                                </div>
-                            </div>
-                            
-                            <h3 class="event-title"><?php echo htmlspecialchars($event['event_title']); ?></h3>
-                            <p class="event-description"><?php echo truncateText($event['event_description'], 120); ?></p>
-                            
-                            <div class="event-footer">
-                                <div class="event-club">
-                                    <i class="fas fa-users"></i>
-                                    <?php echo htmlspecialchars($event['club_name']); ?>
-                                </div>
-                                <div class="event-participants">
-                                    <i class="fas fa-user-friends"></i>
-                                    <?php echo $event['current_participants']; ?>/<?php echo $event['max_participants']; ?>
-                                </div>
-                            </div>
-                            
-                            <div class="event-actions">
-                                <a href="event-details.php?id=<?php echo $event['event_id']; ?>" class="btn btn-primary">
-                                    View Details
-                                </a>
-                                <?php if (isLoggedIn()): ?>
-                                    <button class="btn btn-secondary" onclick="registerForEvent(<?php echo $event['event_id']; ?>">
-                                        Register
-                                    </button>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-        
-        <div class="section-footer" data-aos="fade-up">
-            <a href="events.php" class="btn btn-outline">
-                View All Events
-                <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</section>
+      <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+        <div class="stat-number" data-count="<?= $totalMembers; ?>">0</div>
+        <div class="stat-label">Registered Members</div>
+      </div>
 
-<!-- Featured Clubs -->
-<section class="clubs-section" id="clubs">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Featured Clubs</h2>
-            <p class="section-description">
-                Discover amazing student organizations and join communities that match your interests.
-            </p>
-        </div>
-        
-        <div class="clubs-grid">
-            <?php
-            $featuredClubs = [
-                ['name' => 'ACM Student Chapter', 'code' => 'ACM', 'icon' => 'fas fa-laptop-code', 'color' => '#3498db', 'members' => 150, 'events' => 25],
-                ['name' => 'ACES Association', 'code' => 'ACES', 'icon' => 'fas fa-microchip', 'color' => '#e74c3c', 'members' => 120, 'events' => 20],
-                ['name' => 'CESA Chapter', 'code' => 'CESA', 'icon' => 'fas fa-building', 'color' => '#f39c12', 'members' => 100, 'events' => 15],
-                ['name' => 'MESA Organization', 'code' => 'MESA', 'icon' => 'fas fa-cogs', 'color' => '#9b59b6', 'members' => 130, 'events' => 22],
-                ['name' => 'ITSA Community', 'code' => 'ITSA', 'icon' => 'fas fa-network-wired', 'color' => '#1abc9c', 'members' => 110, 'events' => 18],
-                ['name' => 'IEEE Student Branch', 'code' => 'IEEE', 'icon' => 'fas fa-bolt', 'color' => '#34495e', 'members' => 140, 'events' => 28]
-            ];
-            ?>
-            
-            <?php foreach ($featuredClubs as $index => $club): ?>
-                <div class="club-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                    <div class="club-icon" style="background: <?php echo $club['color']; ?>20; color: <?php echo $club['color']; ?>">
-                        <i class="<?php echo $club['icon']; ?>"></i>
-                    </div>
-                    
-                    <h3 class="club-name"><?php echo $club['name']; ?></h3>
-                    <p class="club-code"><?php echo $club['code']; ?></p>
-                    
-                    <div class="club-stats">
-                        <div class="stat">
-                            <i class="fas fa-users"></i>
-                            <span><?php echo $club['members']; ?> Members</span>
-                        </div>
-                        <div class="stat">
-                            <i class="fas fa-calendar"></i>
-                            <span><?php echo $club['events']; ?> Events</span>
-                        </div>
-                    </div>
-                    
-                    <div class="club-actions">
-                        <a href="clubs/<?php echo strtolower($club['code']); ?>.php" class="btn btn-primary">
-                            Learn More
-                        </a>
-                        <?php if (isLoggedIn()): ?>
-                            <button class="btn btn-secondary" onclick="joinClub('<?php echo $club['code']; ?>">
-                                Join Club
-                            </button>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-        
-        <div class="section-footer" data-aos="fade-up">
-            <a href="clubs.php" class="btn btn-outline">
-                Explore All Clubs
-                <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</section>
+      <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+        <div class="stat-number" data-count="<?= $totalEvents; ?>">0</div>
+        <div class="stat-label">Events Hosted</div>
+      </div>
 
-<!-- Latest Announcements -->
-<section class="announcements-section" id="announcements">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Latest Announcements</h2>
-            <p class="section-description">
-                Stay updated with the latest news, updates, and important information from your clubs.
-            </p>
-        </div>
-        
-        <div class="announcements-grid">
-            <?php if (empty($featuredAnnouncements)): ?>
-                <div class="no-content" data-aos="fade-up">
-                    <i class="fas fa-bullhorn"></i>
-                    <h3>No Announcements</h3>
-                    <p>Check back later for updates!</p>
-                </div>
-            <?php else: ?>
-                <?php foreach ($featuredAnnouncements as $index => $announcement): ?>
-                    <div class="announcement-card" data-aos="fade-up" data-aos-delay="<?php echo $index * 100; ?>">
-                        <div class="announcement-header">
-                            <div class="announcement-badge <?php echo strtolower($announcement['priority']); ?>">
-                                <?php echo htmlspecialchars($announcement['priority']); ?>
-                            </div>
-                            <div class="announcement-date">
-                                <?php echo timeAgo($announcement['published_at']); ?>
-                            </div>
-                        </div>
-                        
-                        <h3 class="announcement-title"><?php echo htmlspecialchars($announcement['announcement_title']); ?></h3>
-                        <p class="announcement-content"><?php echo truncateText($announcement['announcement_content'], 150); ?></p>
-                        
-                        <div class="announcement-footer">
-                            <div class="announcement-author">
-                                <i class="fas fa-user"></i>
-                                <?php echo htmlspecialchars($announcement['author_name']); ?>
-                            </div>
-                            <?php if ($announcement['club_name']): ?>
-                                <div class="announcement-club">
-                                    <i class="fas fa-users"></i>
-                                    <?php echo htmlspecialchars($announcement['club_name']); ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <div class="announcement-actions">
-                            <a href="announcement-details.php?id=<?php echo $announcement['announcement_id']; ?>" class="btn btn-primary">
-                                Read More
-                            </a>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-        
-        <div class="section-footer" data-aos="fade-up">
-            <a href="announcements.php" class="btn btn-outline">
-                View All Announcements
-                <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
+      <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+        <div class="stat-number" data-count="100">0</div>
+        <div class="stat-label">Success Rate</div>
+      </div>
     </div>
+  </div>
 </section>
 
 <!-- Features Section -->
 <section class="features-section" id="features">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Why Choose ClubSphere?</h2>
-            <p class="section-description">
-                Experience the future of club management with powerful features designed for modern student organizations.
-            </p>
-        </div>
-        
-        <div class="features-grid">
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="feature-icon">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <h3 class="feature-title">Event Management</h3>
-                <p class="feature-description">
-                    Create, manage, and promote events with ease. Track registrations, send reminders, and analyze attendance.
-                </p>
-            </div>
-            
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-bullhorn"></i>
-                </div>
-                <h3 class="feature-title">Smart Announcements</h3>
-                <p class="feature-description">
-                    Reach your members with targeted announcements. Schedule posts, track engagement, and manage communications.
-                </p>
-            </div>
-            
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-users-cog"></i>
-                </div>
-                <h3 class="feature-title">Member Management</h3>
-                <p class="feature-description">
-                    Keep track of memberships, roles, and participation. Build stronger communities with organized member data.
-                </p>
-            </div>
-            
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3 class="feature-title">Analytics & Insights</h3>
-                <p class="feature-description">
-                    Understand your club's performance with detailed analytics. Track growth, engagement, and success metrics.
-                </p>
-            </div>
-            
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3 class="feature-title">Mobile Responsive</h3>
-                <p class="feature-description">
-                    Access ClubSphere anywhere, anytime. Our platform works seamlessly on all devices and screen sizes.
-                </p>
-            </div>
-            
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="feature-title">Security & Privacy</h3>
-                <p class="feature-description">
-                    Your data is protected with enterprise-grade security. We prioritize privacy and data protection.
-                </p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">Why Choose ClubSphere?</h2>
+      <p class="section-description">
+        Experience the future of club management with powerful features designed for modern student organizations.
+      </p>
     </div>
+
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
+        <h3 class="feature-title">Event Management</h3>
+        <p class="feature-description">
+          Create, manage, and promote events with ease. Track registrations, send reminders, and analyze attendance.
+        </p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-icon"><i class="fas fa-bullhorn"></i></div>
+        <h3 class="feature-title">Smart Announcements</h3>
+        <p class="feature-description">
+          Reach your members with targeted announcements. Schedule posts and track engagement.
+        </p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-icon"><i class="fas fa-users-cog"></i></div>
+        <h3 class="feature-title">Member Management</h3>
+        <p class="feature-description">
+          Keep track of memberships, roles, and participation. Build stronger communities with organized member data.
+        </p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h3 class="feature-title">Analytics & Insights</h3>
+        <p class="feature-description">
+          Understand your club's performance with analytics. Track growth, engagement, and success metrics.
+        </p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+        <h3 class="feature-title">Mobile Responsive</h3>
+        <p class="feature-description">
+          Access ClubSphere anywhere. Fully optimized for all devices and screen sizes.
+        </p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="feature-title">Security & Privacy</h3>
+        <p class="feature-description">
+          Your data is protected with enterprise-grade encryption and privacy standards.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Call to Action -->
+<!-- CTA Section -->
 <section class="cta-section">
-    <div class="container">
-        <div class="cta-content" data-aos="fade-up">
-            <h2 class="cta-title">Ready to Transform Your Club Experience?</h2>
-            <p class="cta-description">
-                Join thousands of students who are already using ClubSphere to manage their clubs and events.
-            </p>
-            
-            <div class="cta-buttons">
-                <?php if (isLoggedIn()): ?>
-                    <a href="dashboard/user_dashboard.php" class="btn btn-primary">
-                        <i class="fas fa-tachometer-alt"></i>
-                        Go to Dashboard
-                    </a>
-                <?php else: ?>
-                    <a href="login.php" class="btn btn-primary">
-                        <i class="fas fa-user-plus"></i>
-                        Get Started Free
-                    </a>
-                <?php endif; ?>
-                
-                <a href="demo.php" class="btn btn-secondary">
-                    <i class="fas fa-play"></i>
-                    Watch Demo
-                </a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="cta-content" data-aos="fade-up">
+      <h2 class="cta-title">Ready to Transform Your Club Experience?</h2>
+      <p class="cta-description">
+        Join thousands of students already using ClubSphere to manage their clubs and events.
+      </p>
+
+      <div class="cta-buttons">
+        <?php if (isLoggedIn()): ?>
+          <a href="dashboard/user_dashboard.php" class="btn btn-primary">
+            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+          </a>
+        <?php else: ?>
+          <a href="login.php" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Get Started Free
+          </a>
+        <?php endif; ?>
+
+        <a href="demo.php" class="btn btn-secondary">
+          <i class="fas fa-play"></i> Watch Demo
+        </a>
+      </div>
     </div>
+  </div>
 </section>
+
+<!-- ✅ External Styles and Scripts -->
+<link rel="stylesheet" href="assets/css/homepage.css">
+<script src="assets/js/homepage.js"></script>
+
+<?php require_once 'footer.php'; ?>
+
 
 <!-- Custom Styles -->
 <style>
     /* Hero Section */
+    /* --- Container Setup --- */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: transparent; /* ✅ No background */
+}
+
+.text-box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  max-width: 800px;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+/* --- Box Style --- */
+.text-box {
+  position: relative;
+  padding: 18px 40px;
+  background: rgba(0, 255, 230, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: default;
+  text-align: center;
+  transition: transform 0.4s ease, background 0.4s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 230, 0.2);
+}
+
+.text-box span {
+  position: relative;
+  z-index: 2;
+  color: #00ffe7;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px #00ffe7, 0 0 15px #00b3ff;
+}
+
+/* --- Animated Border --- */
+.text-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(90deg, #00fff2, #007bff, #00fff2, #00fff2);
+  background-size: 300% 300%;
+  animation: borderSweep 4s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 1;
+}
+
+/* --- Hover Animation --- */
+.text-box:hover {
+  transform: scale(1.08);
+  background: rgba(0, 255, 230, 0.1);
+  box-shadow: 0 0 20px rgba(0, 255, 230, 0.4);
+}
+
+/* --- Entry Animation --- */
+.text-box {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 0.8s ease forwards;
+}
+.text-box:nth-child(1) { animation-delay: 0.2s; }
+.text-box:nth-child(2) { animation-delay: 0.4s; }
+.text-box:nth-child(3) { animation-delay: 0.6s; }
+.text-box:nth-child(4) { animation-delay: 0.8s; }
+.text-box:nth-child(5) { animation-delay: 1s; }
+.text-box:nth-child(6) { animation-delay: 1.2s; }
+
+/* --- Keyframes --- */
+@keyframes borderSweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
     .hero {
         min-height: 100vh;
         display: flex;

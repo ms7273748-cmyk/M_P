@@ -32,8 +32,8 @@ $currentPath = dirname($_SERVER['PHP_SELF']);
 // Generate navigation items
 $navItems = [
     'index.php' => ['title' => 'Home', 'icon' => 'fas fa-home'],
-    'events.php' => ['title' => 'Events', 'icon' => 'fas fa-calendar-alt'],
-    'announcements.php' => ['title' => 'Announcements', 'icon' => 'fas fa-bullhorn'],
+    'dashboard/events.php' => ['title' => 'Events', 'icon' => 'fas fa-calendar-alt'],
+    'dashboard/announcements.php' => ['title' => 'Announcements', 'icon' => 'fas fa-bullhorn'],
     'clubs.php' => ['title' => 'Clubs', 'icon' => 'fas fa-users'],
 ];
 
